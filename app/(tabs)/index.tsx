@@ -1,31 +1,90 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import { StatusBar } from 'expo-status-bar';
+import Constants from 'expo-constants'; // Import constants to get statusBarHeight
+import { Platform, Pressable, StyleSheet, Image, SafeAreaView } from 'react-native';
+import { Link } from 'expo-router';
 import { Text, View } from '@/components/Themed';
+import { LinearGradient } from 'expo-linear-gradient';
 
-export default function TabOneScreen() {
+export default function LandingPage() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <SafeAreaView style={styles.safeArea}>
+      {/* Manage StatusBar styling */}
+      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+
+      <LinearGradient colors={['#283048', '#859398']} style={styles.container}>
+        <LinearGradient colors={['#dc2424', '#4a569d']} start={[0, 0]} end={[1, 0]} style={[styles.Flex1]}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            alt='Logo'
+            style={{ width: 60, height: 60 }} // Use numbers for width and height
+          />
+          <View style={{ flex: 8, justifyContent: 'flex-end', alignItems: 'flex-end', backgroundColor: 'transparent' }}>
+            <Link style={styles.homebutton} href={"/(Auth)/LogIn"}>
+              <Text style={{ fontSize: 20, fontWeight: 'bold', paddingHorizontal: 4 }}>Login</Text>
+            </Link>
+          </View>
+        </LinearGradient>
+        <View style={[styles.Flex2]}>
+          <Text style={{ fontSize: 40, fontWeight: 'bold' }}>
+            Tokenize
+          </Text>
+        </View>
+      </LinearGradient>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
+    paddingTop: Constants.statusBarHeight, // Set paddingTop to the status bar height
+    backgroundColor: '#283048', // Same background as your LinearGradient to blend
+  },
+  container: {
+    flex: 2,
+    flexDirection: 'column',
+    borderColor: 'white',
+    borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   },
-  title: {
-    fontSize: 20,
+  homebutton: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: 'auto',
+    padding: 5,
     fontWeight: 'bold',
+    borderColor: 'white',
+    borderWidth: 1,
+    color: 'white',
+    borderRadius: 5,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  Flex1: {
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'white',
+    borderWidth: 2,
+    flex: 0.8,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    width: '98%',
+    marginTop: 2,
+    borderRadius: 50,
+  },
+  Flex2: {
+    width: '100%',
+    backgroundColor: 'transparent',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flex: 9.4,
+    flexDirection: 'column',
+    paddingHorizontal: 20,
+    paddingVertical: 6,
+    marginTop: 2,
+    borderRadius: 50,
   },
 });
